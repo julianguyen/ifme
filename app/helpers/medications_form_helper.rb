@@ -85,7 +85,7 @@ module MedicationsFormHelper
   def medication_weekly_dosage
     {
       type: 'checkboxGroup',
-      checkboxes: days_checkbox,
+      # checkboxes: days_checkbox,
       label: t('common.days'),
       info: t('medications.form.weekly_dosage_hint'),
       required: true
@@ -93,7 +93,7 @@ module MedicationsFormHelper
   end
 
   def extra_fields
-    [medication_weekly_dosage, medication_refill, medication_comments]
+    [medication_refill, medication_comments]
   end
 
   def common_fields
@@ -105,7 +105,7 @@ module MedicationsFormHelper
       medication_unit_field('total'),
       medication_field('dosage'),
       medication_unit_field('dosage')
-    ].concat(extra_fields).concat(reminder_fields)
+    ].concat(daily_reminder).concat(extra_fields).concat(reminder_fields)
   end
 
   def medication_comments
@@ -137,6 +137,51 @@ module MedicationsFormHelper
       info: t('medications.form.name_hint'),
       required: true
     }.merge(medication_basic_props('name'))
+  end
+
+  def daily_reminder_checkbox(i)
+    {
+      id: "medication_weekly_dosage_#{i}",
+      type: 'checkbox',
+      label: t(:'date.abbr_day_names')[i],
+      name: 'medication[weekly_dosage][]',
+      checked: @medication.weekly_dosage.include?(i),
+      value: i,
+      dark: true
+    }
+  end
+
+  def daily_reminder_input(i)
+    {
+      type: 'time',
+      name: 'medication[weekly_dosage_time]',
+    }.merge(medication_basic_props('daily_reminder_input'))
+  end
+
+  def daily_reminder
+    [
+      medication_weekly_dosage,
+      daily_reminder_checkbox(0),
+      daily_reminder_input(0),
+
+      daily_reminder_checkbox(1),
+      daily_reminder_input(1),
+
+      daily_reminder_checkbox(2),
+      daily_reminder_input(2),
+
+      daily_reminder_checkbox(3),
+      daily_reminder_input(3),
+
+      daily_reminder_checkbox(4),
+      daily_reminder_input(4),
+
+      daily_reminder_checkbox(5),
+      daily_reminder_input(5),
+
+      daily_reminder_checkbox(6),
+      daily_reminder_input(6)
+    ]
   end
 
   def medication_refill
@@ -224,4 +269,5 @@ module MedicationsFormHelper
       required: true
     }.merge(medication_basic_props(type))
   end
+
 end
