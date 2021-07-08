@@ -980,6 +980,12 @@ en:
             Introduce yourself! Why are you here and what are you looking to
             achieve? Please note this will be seen when users search for you
           required: Required
+        disable:
+          text: Do you need a bit of a break from <strong>if-me.org</strong>?
+          button: Temporarily disable my account
+          confirm: >-
+            Are you sure? You will not be able to access your data without
+            enabling your account again.
         delete:
           text: Is <strong>if-me.org</strong> not working out for you?
           button: Permanently delete my account
